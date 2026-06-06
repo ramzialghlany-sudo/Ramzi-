@@ -1,0 +1,71 @@
+# Proteus Circuit Description
+
+## Components Required:
+
+### Microcontroller:
+- ATmega328P (DIP-28 package)
+
+### Communication:
+- MAX232 or equivalent RS232 level shifter
+- DB9 connector (for UART)
+
+### Display:
+- 16x2 Character LCD Display
+- 10kΩ potentiometer (for LCD contrast control)
+
+### Sensor:
+- LM35 Temperature Sensor (or variable resistor for simulation)
+
+### Passive Components:
+- Crystal oscillator: 16 MHz
+- Capacitors: 22pF (2x for crystal), 100nF (power supply decoupling)
+- Resistors: 10kΩ (pull-up for I2C-like connections)
+
+### Power Supply:
+- 5V DC power source
+
+## Circuit Connections:
+
+### ATmega328P Pins:
+- Pin 1: RESET (pull-up to 5V via 10kΩ)
+- Pin 7: GND
+- Pin 8: VCC (5V)
+- Pin 9: XTAL2 (Crystal oscillator)
+- Pin 10: XTAL1 (Crystal oscillator)
+- Pin 14: GND
+- Pin 20: AREF (0.1µF to GND)
+- Pin 19: GND
+
+### ADC (Channel 0 - A0):
+- Pin 23 (ADC0/PC0): Connect to LM35 sensor output
+
+### LCD Display (16x2):
+- Data pins (DB4-DB7): Connect to PD4-PD7
+- RS (Register Select): Connect to PB0
+- RW (Read/Write): Connect to PB1 (usually tied to GND for write-only)
+- EN (Enable): Connect to PB2
+- VSS (GND): Connect to GND
+- VCC (5V): Connect to 5V
+- V0 (Contrast): Connect to potentiometer wiper
+
+### UART (Serial):
+- TX (PD1/Pin 3): Connect to MAX232 TX input
+- RX (PD0/Pin 2): Connect to MAX232 RX output
+- MAX232 RS-232 side: Connect to DB9 connector
+
+### TIMER:
+- Timer0: Used internally for general timing
+- Timer1: Used for 1-second interrupt generation
+
+## Simulation Setup:
+1. Add a voltage source (0-5V variable) for ADC simulation
+2. Add a logic analyzer to observe UART communication
+3. Add oscilloscope probes to monitor ADC and timer signals
+4. Set simulation speed to 10x for faster operation
+
+## Testing Procedure:
+1. Start simulation
+2. LCD should display "Temperature" then "System Ready"
+3. LCD will show real-time temperature readings
+4. UART should send data at 9600 baud
+5. Adjust ADC input voltage to see temperature change
